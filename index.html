@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Manos Verdes Woodwork — Muebles a medida</title>
-<meta name="description" content="Taller de muebles a medida en Chile. Mesas, vanities, mesones y muebles de autor en madera maciza. Configurador en vivo y atención por WhatsApp." />
+<meta name="description" content="Taller de muebles a medida en Chile. Mesas, vanities, mesones y muebles de autor en madera maciza." />
 <meta name="author" content="Manos Verdes Woodwork" />
 
 <meta property="og:type" content="website" />
@@ -27,7 +27,7 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
 
   <script type="text/babel" data-presets="env,react">
-/* ========================= hero.jsx ========================= */
+/* ========== hero.jsx ========== */
 /* Hero cinematográfico con mosaico */
 const { useState, useEffect, useRef } = React;
 
@@ -84,8 +84,8 @@ function Hero() {
             Diseñamos y fabricamos piezas únicas — mesas, vanities, mesones y muebles de autor — para casas, restaurantes y proyectos arquitectónicos. Cada encargo nace de un boceto y termina en tu lugar.
           </p>
           <div className="hero-actions">
-            <a href="#configurador" className="btn btn-solid">
-              Diseña tu pieza <span className="arrow">→</span>
+            <a href="#brief" className="btn btn-solid">
+              Solicitar brief <span className="arrow">→</span>
             </a>
             <a href="#galeria" className="btn btn-ghost">
               Ver proyectos <span className="arrow">→</span>
@@ -273,7 +273,7 @@ const heroStyles = `
 `;
 
 
-/* ========================= manifiesto.jsx ========================= */
+/* ========== manifiesto.jsx ========== */
 /* Sección Manifiesto / Sobre */
 function Manifiesto() {
   return (
@@ -405,7 +405,7 @@ const manifiestoStyles = `
 `;
 
 
-/* ========================= detalle.jsx ========================= */
+/* ========== detalle.jsx ========== */
 /* Sección "Detalle obsesivo" — diptico de imagen + texto */
 function Detalle() {
   return (
@@ -507,7 +507,7 @@ const detalleStyles = `
 `;
 
 
-/* ========================= galeria.jsx ========================= */
+/* ========== galeria.jsx ========== */
 /* Galería de proyectos — grid editorial con focus */
 function Galeria() {
   const [focus, setFocus] = useState(null);
@@ -722,7 +722,7 @@ const galeriaStyles = `
 `;
 
 
-/* ========================= linea-tiempo.jsx ========================= */
+/* ========== linea-tiempo.jsx ========== */
 /* Línea de tiempo del portfolio — usuario navega por meses */
 function LineaTiempo() {
   const [activo, setActivo] = useState(4);
@@ -1016,7 +1016,7 @@ const ltStyles = `
 `;
 
 
-/* ========================= configurador.jsx ========================= */
+/* ========== configurador.jsx ========== */
 /* Configurador interactivo — el corazón del sitio */
 function Configurador() {
   const [tipo, setTipo] = useState('mesa-comedor');
@@ -1468,7 +1468,7 @@ const cfgStyles = `
 `;
 
 
-/* ========================= proceso-brief.jsx ========================= */
+/* ========== proceso-brief.jsx ========== */
 /* Proceso (timeline horizontal) + Brief form + Footer */
 function Proceso() {
   const steps = [
@@ -1645,8 +1645,8 @@ function Footer() {
           <ul>
             <li><a href="#manifiesto">Manifiesto</a></li>
             <li><a href="#galeria">Proyectos</a></li>
-            <li><a href="#configurador">Configurador</a></li>
             <li><a href="#proceso">Proceso</a></li>
+            <li><a href="#brief">Brief</a></li>
           </ul>
         </div>
         <div>
@@ -1780,7 +1780,7 @@ const procStyles = `
 `;
 
 
-/* ========================= app.jsx ========================= */
+/* ========== app.jsx ========== */
 /* Mount + glue */
 const { createRoot } = ReactDOM;
 
@@ -1800,7 +1800,6 @@ function Nav() {
       <div className="nav-links">
         <a href="#manifiesto">Manifiesto</a>
         <a href="#galeria">Proyectos</a>
-        <a href="#configurador">Configurador</a>
         <a href="#proceso">Proceso</a>
         <a href="#contacto">Contacto</a>
       </div>
@@ -1848,7 +1847,7 @@ function App() {
         <Detalle />
         <Galeria />
         <LineaTiempo />
-        <Configurador />
+        {/* <Configurador /> -- ocultado temporalmente */}
         <Proceso />
         <Brief />
       </main>

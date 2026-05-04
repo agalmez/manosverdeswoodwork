@@ -17,7 +17,6 @@ function Nav() {
       <div className="nav-links">
         <a href="#manifiesto">Manifiesto</a>
         <a href="#galeria">Proyectos</a>
-        <a href="#configurador">Configurador</a>
         <a href="#proceso">Proceso</a>
         <a href="#contacto">Contacto</a>
       </div>
@@ -65,7 +64,7 @@ function App() {
         <Detalle />
         <Galeria />
         <LineaTiempo />
-        <Configurador />
+        {/* <Configurador /> -- ocultado temporalmente */}
         <Proceso />
         <Brief />
       </main>

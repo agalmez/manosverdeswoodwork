@@ -54,8 +54,8 @@ function Hero() {
             Diseñamos y fabricamos piezas únicas — mesas, vanities, mesones y muebles de autor — para casas, restaurantes y proyectos arquitectónicos. Cada encargo nace de un boceto y termina en tu lugar.
           </p>
           <div className="hero-actions">
-            <a href="#configurador" className="btn btn-solid">
-              Diseña tu pieza <span className="arrow">→</span>
+            <a href="#brief" className="btn btn-solid">
+              Solicitar brief <span className="arrow">→</span>
             </a>
             <a href="#galeria" className="btn btn-ghost">
               Ver proyectos <span className="arrow">→</span>

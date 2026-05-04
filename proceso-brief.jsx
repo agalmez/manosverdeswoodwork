@@ -174,8 +174,8 @@ function Footer() {
           <ul>
             <li><a href="#manifiesto">Manifiesto</a></li>
             <li><a href="#galeria">Proyectos</a></li>
-            <li><a href="#configurador">Configurador</a></li>
             <li><a href="#proceso">Proceso</a></li>
+            <li><a href="#brief">Brief</a></li>
           </ul>
         </div>
         <div>
