@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Manos Verdes Woodwork — Muebles a medida</title>
+<meta name="description" content="Taller de muebles a medida en Chile. Mesas, vanities, mesones y muebles de autor en madera maciza. Configurador en vivo y atención por WhatsApp." />
+<meta name="author" content="Manos Verdes Woodwork" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Manos Verdes Woodwork — Muebles a medida" />
+<meta property="og:description" content="Taller de muebles a medida en Chile. Madera maciza, diseño honesto." />
+<meta property="og:image" content="img/01-mesa-ovalada-negra.png" />
+<meta property="og:locale" content="es_CL" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+
+  <script type="text/babel" data-presets="env,react">
+/* ========================= hero.jsx ========================= */
+/* Hero cinematográfico con mosaico */
+const { useState, useEffect, useRef } = React;
+
+function Hero() {
+  const [scrollY, setScrollY] = useState(0);
+  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
+
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    const onMove = (e) => setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('mousemove', onMove);
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('mousemove', onMove); };
+  }, []);
+
+  const parallax = (depth) => `translate3d(${(mouse.x - 0.5) * depth}px, ${(mouse.y - 0.5) * depth - scrollY * (depth / 80)}px, 0)`;
+
+  return (
+    <section className="hero">
+      {/* Background mosaic */}
+      <div className="hero-mosaic" aria-hidden>
+        <div className="hm-cell hm-1" style={{ transform: parallax(20) }}>
+          <img src="img/01-mesa-ovalada-negra.png" alt="" />
+        </div>
+        <div className="hm-cell hm-2" style={{ transform: parallax(34) }}>
+          <img src="img/06-vanity-fluted.png" alt="" />
+        </div>
+        <div className="hm-cell hm-3" style={{ transform: parallax(14) }}>
+          <img src="img/03-mesa-centro-bloque.png" alt="" />
+        </div>
+        <div className="hm-cell hm-4" style={{ transform: parallax(40) }}>
+          <img src="img/07-sideboard-roble.png" alt="" />
+        </div>
+        <div className="hm-cell hm-5" style={{ transform: parallax(24) }}>
+          <img src="img/10-mesa-comedor-natural.png" alt="" />
+        </div>
+      </div>
+
+      {/* Foreground content */}
+      <div className="hero-content">
+        <div className="hero-meta">
+          <div className="mono">Taller de muebles a medida</div>
+          <div className="mono">Chile · Est. 2018</div>
+        </div>
+
+        <h1 className="hero-title serif">
+          <span className="line line-1">Madera que</span>
+          <span className="line line-2"><em>habita</em> el</span>
+          <span className="line line-3">espacio.</span>
+        </h1>
+
+        <div className="hero-bottom">
+          <p className="hero-lead">
+            Diseñamos y fabricamos piezas únicas — mesas, vanities, mesones y muebles de autor — para casas, restaurantes y proyectos arquitectónicos. Cada encargo nace de un boceto y termina en tu lugar.
+          </p>
+          <div className="hero-actions">
+            <a href="#configurador" className="btn btn-solid">
+              Diseña tu pieza <span className="arrow">→</span>
+            </a>
+            <a href="#galeria" className="btn btn-ghost">
+              Ver proyectos <span className="arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="hero-scroll">
+          <div className="mono">Scroll</div>
+          <div className="scroll-line"><div className="scroll-dot" /></div>
+        </div>
+      </div>
+
+      {/* Side index */}
+      <div className="hero-sideindex">
+        <span>01 / Madera</span>
+        <span>02 / Diseño</span>
+        <span>03 / A medida</span>
+      </div>
+    </section>
+  );
+}
+
+const heroStyles = `
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: var(--ink);
+  color: var(--bone);
+  overflow: hidden;
+  padding: 120px var(--gutter) 60px;
+}
+.hero-mosaic {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.hm-cell {
+  position: absolute;
+  overflow: hidden;
+  filter: brightness(0.85) saturate(0.95);
+  will-change: transform;
+}
+.hm-cell img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.hm-1 { top: 8%;  right: -4%; width: 38%;  height: 52%; }
+.hm-2 { top: 56%; left: -2%;  width: 22%;  height: 32%; }
+.hm-3 { top: 12%; left: 18%;  width: 16%;  height: 22%; opacity: 0.95; }
+.hm-4 { bottom: 4%; right: 8%; width: 24%; height: 28%; }
+.hm-5 { top: 38%;  left: 38%; width: 18%;  height: 22%; opacity: 0.7; }
+
+.hero-mosaic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, transparent 0%, rgba(26, 24, 21, 0.35) 70%),
+    linear-gradient(180deg, rgba(26, 24, 21, 0.15) 0%, rgba(26, 24, 21, 0.7) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max);
+  margin: 0 auto;
+  height: calc(100vh - 180px);
+  min-height: 620px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 40px;
+}
+
+.hero-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 236, 0.7);
+  padding-top: 24px;
+}
+
+.hero-title {
+  align-self: center;
+  font-size: clamp(64px, 13vw, 220px);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+}
+.hero-title .line {
+  display: block;
+  overflow: hidden;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--wood);
+  position: relative;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+}
+.hero-title .line { text-shadow: 0 2px 30px rgba(0,0,0,0.5); }
+.hero-title .line-2 { padding-left: clamp(40px, 12vw, 220px); }
+.hero-title .line-3 { padding-left: clamp(80px, 24vw, 440px); }
+
+.hero-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  border-top: 1px solid rgba(245, 242, 236, 0.18);
+  padding-top: 32px;
+}
+.hero-lead {
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 460px;
+  color: rgba(245, 242, 236, 0.82);
+}
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.hero-actions .btn-solid { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+.hero-actions .btn-solid:hover { background: var(--wood); color: var(--ink); border-color: var(--wood); }
+.hero-actions .btn-ghost { color: var(--bone); }
+.hero-actions .btn-ghost:hover { background: var(--bone); color: var(--ink); }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 236, 0.6);
+}
+.scroll-line {
+  width: 1px; height: 36px;
+  background: rgba(245, 242, 236, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-dot {
+  position: absolute; top: 0; left: 0;
+  width: 1px; height: 12px;
+  background: var(--bone);
+  animation: scrollDot 1.8s ease-in-out infinite;
+}
+@keyframes scrollDot {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(300%); }
+}
+
+.hero-sideindex {
+  position: absolute;
+  right: var(--gutter);
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: right center;
+  display: flex;
+  gap: 32px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 236, 0.4);
+  z-index: 3;
+}
+
+@media (max-width: 820px) {
+  .hero-bottom { grid-template-columns: 1fr; gap: 24px; }
+  .hero-actions { justify-content: flex-start; }
+  .hero-sideindex { display: none; }
+  .hero-title .line-2 { padding-left: 24px; }
+  .hero-title .line-3 { padding-left: 60px; }
+}
+`;
+
+
+/* ========================= manifiesto.jsx ========================= */
+/* Sección Manifiesto / Sobre */
+function Manifiesto() {
+  return (
+    <section className="section manifiesto" id="manifiesto">
+      <div className="shell">
+        <div className="section-num"><span>02 — El taller</span></div>
+
+        <div className="manif-grid">
+          <div className="manif-text">
+            <h2 className="display-l serif">
+              Manos que dan<br/>
+              <em>vida</em> a la<br/>
+              madera.
+            </h2>
+          </div>
+
+          <div className="manif-side">
+            <p className="manif-lead">
+              En Manos Verdes Woodwork creemos que un mueble no se compra: <em>se proyecta.</em> Cada pieza nace de una conversación, se diseña a la medida exacta de tu espacio, y se construye con maderas nobles seleccionadas una a una.
+            </p>
+            <p className="manif-lead">
+              Trabajamos para hogares que valoran el detalle bien resuelto y para restaurantes, oficinas y comercios que necesitan ambientes con identidad. Nuestra firma: <em>el listón vertical</em>, las uniones limpias, y el acabado que invita a tocar.
+            </p>
+            <div className="manif-stats">
+              <div className="stat">
+                <div className="stat-num serif">240+</div>
+                <div className="stat-label mono">Piezas entregadas</div>
+              </div>
+              <div className="stat">
+                <div className="stat-num serif">8</div>
+                <div className="stat-label mono">Años de oficio</div>
+              </div>
+              <div className="stat">
+                <div className="stat-num serif">100%</div>
+                <div className="stat-label mono">Maderas chilenas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="manif-pillars">
+          <div className="pillar">
+            <div className="pillar-num mono">i</div>
+            <h3 className="serif">Madera maciza, no chapeada</h3>
+            <p>Trabajamos solo con madera sólida — roble, raulí, lenga, mañío. Cada pieza envejece, no se descascara.</p>
+          </div>
+          <div className="pillar">
+            <div className="pillar-num mono">ii</div>
+            <h3 className="serif">Diseño antes de cortar</h3>
+            <p>Cada encargo parte con bocetos a mano y planos 3D. No improvisamos sobre la pieza — la pensamos.</p>
+          </div>
+          <div className="pillar">
+            <div className="pillar-num mono">iii</div>
+            <h3 className="serif">Garantía sin letra chica</h3>
+            <p>Diez años sobre estructura. Si algo falla, lo arreglamos en tu casa o en el taller. Sin discusión.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const manifiestoStyles = `
+.manifiesto { background: var(--bone); border-top: 1px solid var(--line); }
+.manif-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 80px;
+  align-items: start;
+  padding-bottom: 100px;
+}
+.manif-text h2 em { font-style: italic; color: var(--green); }
+.manif-side {
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.manif-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 420px;
+}
+.manif-lead em { font-style: italic; color: var(--green); font-family: var(--serif); font-size: 1.08em; }
+.manif-lead + .manif-lead { padding-top: 20px; border-top: 1px solid var(--line); }
+.manif-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+}
+.stat-num { font-size: 44px; line-height: 1; margin-bottom: 8px; }
+.stat-label { color: var(--muted); }
+
+.manif-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.pillar {
+  padding: 40px 32px 40px 0;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pillar:last-child { border-right: none; padding-right: 0; }
+.pillar:not(:first-child) { padding-left: 32px; }
+.pillar-num {
+  font-style: italic;
+  font-family: var(--serif);
+  font-size: 14px;
+  text-transform: lowercase;
+  letter-spacing: 0;
+  color: var(--green);
+}
+.pillar h3 { font-size: 24px; line-height: 1.1; }
+.pillar p { font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+
+@media (max-width: 820px) {
+  .manif-grid { grid-template-columns: 1fr; gap: 40px; }
+  .manif-pillars { grid-template-columns: 1fr; }
+  .pillar { border-right: none; border-bottom: 1px solid var(--line); padding: 32px 0 !important; }
+  .manif-stats { grid-template-columns: 1fr; gap: 16px; }
+}
+`;
+
+
+/* ========================= detalle.jsx ========================= */
+/* Sección "Detalle obsesivo" — diptico de imagen + texto */
+function Detalle() {
+  return (
+    <section className="section detalle">
+      <div className="detalle-marquee">
+        <div className="marquee">
+          <div className="marquee-track">
+            <span><span className="serif"><em>Roble</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Raulí</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Lenga</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Mañío</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Nogal</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Ennegrecido</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Roble</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Raulí</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Lenga</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Mañío</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Nogal</em></span><span className="dot"></span></span>
+            <span><span className="serif"><em>Ennegrecido</em></span><span className="dot"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <div className="shell">
+        <div className="det-grid">
+          <div className="det-img det-1">
+            <img src="img/06-vanity-fluted.png" alt="Detalle ranurado" />
+            <div className="det-tag mono">Detalle ranurado · 3mm</div>
+          </div>
+          <div className="det-text">
+            <div className="section-num"><span>02b — Detalle obsesivo</span></div>
+            <h2 className="display-m serif">Lo que <em>no se ve</em> también está pensado.</h2>
+            <p>
+              Cada ranura, cada ensamble, cada veta. Trabajamos con tolerancias menores a un milímetro porque la diferencia entre un buen mueble y uno excelente está en lo que descubres a los meses, cuando pasas la mano y todavía está perfecto.
+            </p>
+            <div className="det-list">
+              <div className="det-row"><span className="mono">01</span><span>Ensambles tradicionales — caja y espiga, cola de milano</span></div>
+              <div className="det-row"><span className="mono">02</span><span>Aceites naturales — sin barnices plásticos</span></div>
+              <div className="det-row"><span className="mono">03</span><span>Madera secada al aire por 18 meses mínimo</span></div>
+              <div className="det-row"><span className="mono">04</span><span>Fierros y herrajes hechos por herrero local</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const detalleStyles = `
+.detalle { background: var(--bone); border-top: 1px solid var(--line); padding-top: 0; }
+.detalle-marquee { margin-bottom: clamp(60px, 10vh, 120px); }
+.detalle .marquee { border-top: none; }
+.detalle .marquee-track em { color: var(--green); font-style: italic; }
+
+.det-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding-bottom: 60px;
+}
+.det-img {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background: var(--ink);
+}
+.det-img img { width: 100%; height: 100%; object-fit: cover; }
+.det-tag {
+  position: absolute;
+  bottom: 16px; left: 16px;
+  background: var(--bone);
+  padding: 8px 12px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+.det-text h2 { margin: 16px 0 24px; }
+.det-text h2 em { font-style: italic; color: var(--green); }
+.det-text p { font-size: 16px; line-height: 1.65; color: var(--ink-soft); max-width: 480px; }
+.det-list {
+  margin-top: 40px;
+  display: flex; flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+.det-row {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+  gap: 16px;
+  font-size: 14px;
+}
+.det-row .mono { color: var(--green); }
+
+@media (max-width: 820px) {
+  .det-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+`;
+
+
+/* ========================= galeria.jsx ========================= */
+/* Galería de proyectos — grid editorial con focus */
+function Galeria() {
+  const [focus, setFocus] = useState(null);
+
+  const projects = [
+    { src: 'img/01-mesa-ovalada-negra.png', titulo: 'Mesa Bruna', tipo: 'Mesa de comedor', medidas: '280 × 110 cm', madera: 'Roble ennegrecido', año: '2025', span: 'span-tall' },
+    { src: 'img/06-vanity-fluted.png', titulo: 'Vanity Línea', tipo: 'Mueble de baño', medidas: '180 × 55 cm', madera: 'Roble americano', año: '2024', span: 'span-wide' },
+    { src: 'img/03-mesa-centro-bloque.png', titulo: 'Bloque Macizo', tipo: 'Mesa de centro', medidas: '120 × 70 cm', madera: 'Mañío en cubos', año: '2024', span: '' },
+    { src: 'img/07-sideboard-roble.png', titulo: 'Sideboard Cordillera', tipo: 'Aparador', medidas: '320 × 90 cm', madera: 'Roble macizo', año: '2025', span: 'span-tall' },
+    { src: 'img/02-mesa-larga-restaurante.png', titulo: 'Mesón Foresta', tipo: 'Mesón comercial', medidas: '420 × 80 cm', madera: 'Raulí + nogal', año: '2024', span: 'span-wide' },
+    { src: 'img/08-mesa-comedor-fluted-base.png', titulo: 'Mesa Estriada', tipo: 'Mesa de comedor', medidas: '240 × 100 cm', madera: 'Raulí + ébano', año: '2024', span: '' },
+    { src: 'img/10-mesa-comedor-natural.png', titulo: 'Mesa Lenga', tipo: 'Mesa de comedor', medidas: '200 × 90 cm', madera: 'Lenga clara', año: '2023', span: '' },
+    { src: 'img/05-mesa-cristal-base-madera.png', titulo: 'Mesa Cruz', tipo: 'Mesa auxiliar', medidas: '90 × 90 cm', madera: 'Roble + cristal', año: '2025', span: '' },
+    { src: 'img/04-restaurante-mesones.png', titulo: 'Sora Restaurant', tipo: 'Proyecto comercial', medidas: '12 piezas', madera: 'Raulí natural', año: '2024', span: 'span-wide' },
+    { src: 'img/09-mesa-centro-negra-detalle.png', titulo: 'Centro Sombra', tipo: 'Mesa de centro', medidas: '140 × 80 cm', madera: 'Roble ennegrecido', año: '2025', span: '' },
+  ];
+
+  return (
+    <section className="section galeria" id="galeria">
+      <div className="shell">
+        <div className="gal-head">
+          <div>
+            <div className="section-num"><span>03 — Archivo de proyectos</span></div>
+            <h2 className="display-m serif">Cada pieza, <em>un encargo.</em></h2>
+          </div>
+          <p className="gal-lead">
+            Selección de proyectos entregados entre 2023 y 2026. Click en cualquiera para ver detalles del encargo.
+          </p>
+        </div>
+
+        <div className="gal-grid">
+          {projects.map((p, i) => (
+            <button
+              key={i}
+              className={`gal-item ${p.span}`}
+              onClick={() => setFocus(p)}
+            >
+              <div className="gal-img">
+                <img src={p.src} alt={p.titulo} loading="lazy" />
+                <div className="gal-overlay">
+                  <div className="gal-meta">
+                    <div className="mono">{String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</div>
+                    <div className="mono">{p.año}</div>
+                  </div>
+                  <div className="gal-info">
+                    <div className="serif gal-title">{p.titulo}</div>
+                    <div className="mono">{p.tipo}</div>
+                  </div>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {focus && (
+        <div className="gal-modal" onClick={() => setFocus(null)}>
+          <div className="gal-modal-inner" onClick={(e) => e.stopPropagation()}>
+            <button className="gal-close" onClick={() => setFocus(null)}>✕ Cerrar</button>
+            <div className="gal-modal-img">
+              <img src={focus.src} alt={focus.titulo} />
+            </div>
+            <div className="gal-modal-info">
+              <div className="mono" style={{color: 'var(--muted)'}}>{focus.tipo} · {focus.año}</div>
+              <h3 className="display-s serif">{focus.titulo}</h3>
+              <dl className="gal-specs">
+                <div><dt className="mono">Medidas</dt><dd>{focus.medidas}</dd></div>
+                <div><dt className="mono">Madera</dt><dd>{focus.madera}</dd></div>
+                <div><dt className="mono">Tipo</dt><dd>{focus.tipo}</dd></div>
+              </dl>
+              <a href="#brief" className="btn btn-solid" onClick={() => setFocus(null)}>
+                Quiero algo similar <span className="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+const galeriaStyles = `
+.galeria { background: var(--bone); border-top: 1px solid var(--line); }
+.gal-head {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 60px;
+}
+.gal-head h2 em { font-style: italic; color: var(--green); }
+.gal-lead { font-size: 15px; line-height: 1.55; color: var(--ink-soft); max-width: 360px; }
+
+.gal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 280px;
+  gap: 16px;
+}
+.gal-item {
+  position: relative;
+  display: block;
+  padding: 0;
+  background: var(--ink);
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+}
+.gal-item.span-tall { grid-row: span 2; }
+.gal-item.span-wide { grid-column: span 2; }
+
+.gal-img {
+  position: relative;
+  width: 100%; height: 100%;
+  overflow: hidden;
+}
+.gal-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  filter: brightness(0.96);
+}
+.gal-item:hover .gal-img img { transform: scale(1.06); filter: brightness(1.0); }
+
+.gal-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--bone);
+  background: linear-gradient(180deg, rgba(26,24,21,0.0) 0%, rgba(26,24,21,0.0) 50%, rgba(26,24,21,0.78) 100%);
+  transition: background 0.5s ease;
+}
+.gal-item:hover .gal-overlay {
+  background: linear-gradient(180deg, rgba(26,24,21,0.2) 0%, rgba(26,24,21,0.4) 50%, rgba(26,24,21,0.85) 100%);
+}
+.gal-meta {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(245, 242, 236, 0.85);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+.gal-info { display: flex; flex-direction: column; gap: 4px; }
+.gal-title { font-size: 22px; line-height: 1.05; }
+.gal-info .mono { font-size: 10px; color: rgba(245, 242, 236, 0.7); }
+
+/* Modal */
+.gal-modal {
+  position: fixed; inset: 0;
+  background: rgba(26, 24, 21, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.gal-modal-inner {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  width: 100%;
+  max-height: 90vh;
+  background: var(--bone);
+  position: relative;
+}
+.gal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  z-index: 2;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--bone);
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+}
+.gal-close:hover { background: var(--ink); color: var(--bone); }
+.gal-modal-img { background: var(--ink); overflow: hidden; }
+.gal-modal-img img { width: 100%; height: 100%; object-fit: cover; min-height: 500px; }
+.gal-modal-info { padding: 60px 40px; display: flex; flex-direction: column; gap: 24px; align-self: center; }
+.gal-specs {
+  display: flex; flex-direction: column; gap: 12px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 20px 0;
+  margin-top: 8px;
+}
+.gal-specs > div { display: grid; grid-template-columns: 100px 1fr; gap: 16px; align-items: baseline; }
+.gal-specs dt { color: var(--muted); }
+.gal-specs dd { font-family: var(--serif); font-size: 18px; }
+
+@media (max-width: 1024px) {
+  .gal-grid { grid-template-columns: repeat(2, 1fr); }
+  .gal-item.span-wide { grid-column: span 2; }
+  .gal-item.span-tall { grid-row: span 2; }
+}
+@media (max-width: 820px) {
+  .gal-head { grid-template-columns: 1fr; gap: 24px; }
+  .gal-modal-inner { grid-template-columns: 1fr; max-height: 95vh; overflow-y: auto; }
+  .gal-modal-img img { min-height: 280px; max-height: 50vh; }
+  .gal-modal-info { padding: 32px 24px; }
+  .gal-modal { padding: 16px; }
+}
+`;
+
+
+/* ========================= linea-tiempo.jsx ========================= */
+/* Línea de tiempo del portfolio — usuario navega por meses */
+function LineaTiempo() {
+  const [activo, setActivo] = useState(4);
+
+  const proyectos = [
+    { mes: 'Mar', año: '2023', img: 'img/10-mesa-comedor-natural.png', titulo: 'Mesa Lenga', cliente: 'Casa Reñaca', tipo: 'Mesa de comedor', madera: 'Lenga clara · 200 × 90 cm', nota: 'Primera pieza con lenga seleccionada del sur.' },
+    { mes: 'Jul', año: '2023', img: 'img/03-mesa-centro-bloque.png', titulo: 'Bloque Macizo', cliente: 'Depto. Vitacura', tipo: 'Mesa de centro', madera: 'Mañío en cubos · 120 × 70 cm', nota: 'Encargo que definió la firma del bloque.' },
+    { mes: 'Nov', año: '2023', img: 'img/05-mesa-cristal-base-madera.png', titulo: 'Mesa Cruz', cliente: 'Casa Lo Barnechea', tipo: 'Mesa auxiliar', madera: 'Roble + cristal · 90 × 90 cm', nota: 'Tablero de cristal sobre cruz de roble macizo.' },
+    { mes: 'Feb', año: '2024', img: 'img/04-restaurante-mesones.png', titulo: 'Sora Restaurant', cliente: 'Sora · Providencia', tipo: 'Proyecto comercial', madera: 'Raulí natural · 12 piezas', nota: 'Doce mesas con bases torneadas. 6 semanas de taller.' },
+    { mes: 'May', año: '2024', img: 'img/06-vanity-fluted.png', titulo: 'Vanity Línea', cliente: 'Casa Chicureo', tipo: 'Mueble de baño', madera: 'Roble americano · 180 × 55 cm', nota: 'Estriado vertical con tolerancia de 0.5mm entre tablones.' },
+    { mes: 'Ago', año: '2024', img: 'img/02-mesa-larga-restaurante.png', titulo: 'Mesón Foresta', cliente: 'Foresta Bistró', tipo: 'Mesón comercial', madera: 'Raulí + nogal · 420 × 80 cm', nota: 'Mesón de 4.20 m sin junta visible al centro.' },
+    { mes: 'Oct', año: '2024', img: 'img/08-mesa-comedor-fluted-base.png', titulo: 'Mesa Estriada', cliente: 'Casa La Dehesa', tipo: 'Mesa de comedor', madera: 'Raulí + ébano · 240 × 100 cm', nota: 'Base estriada con incrustación negra.' },
+    { mes: 'Ene', año: '2025', img: 'img/01-mesa-ovalada-negra.png', titulo: 'Mesa Bruna', cliente: 'Casa Las Condes', tipo: 'Mesa de comedor', madera: 'Roble ennegrecido · 280 × 110 cm', nota: 'Tablero ovalado con dos bases columnares fluted.' },
+    { mes: 'Abr', año: '2025', img: 'img/07-sideboard-roble.png', titulo: 'Sideboard Cordillera', cliente: 'Casa Vitacura', tipo: 'Aparador', madera: 'Roble macizo · 320 × 90 cm', nota: 'Pieza más grande del año. Tres meses de fabricación.' },
+    { mes: 'Jul', año: '2025', img: 'img/09-mesa-centro-negra-detalle.png', titulo: 'Centro Sombra', cliente: 'Loft Bellavista', tipo: 'Mesa de centro', madera: 'Roble ennegrecido · 140 × 80 cm', nota: 'Acabado ennegrecido con tinte natural.' },
+    { mes: 'Oct', año: '2025', img: 'img/06-vanity-fluted.png', titulo: 'Vanity Doble', cliente: 'Casa Cachagua', tipo: 'Mueble de baño', madera: 'Roble americano · 240 × 55 cm', nota: 'Versión doble lavamanos del Vanity Línea.' },
+    { mes: 'Feb', año: '2026', img: 'img/01-mesa-ovalada-negra.png', titulo: 'Mesa Aurora', cliente: 'Casa Zapallar', tipo: 'Mesa de comedor', madera: 'Roble ennegrecido · 320 × 120 cm', nota: 'Encargo más reciente. Variante de Bruna ampliada.' },
+  ];
+
+  const p = proyectos[activo];
+
+  return (
+    <section className="section linea-tiempo" id="archivo">
+      <div className="shell">
+        <div className="lt-head">
+          <div>
+            <div className="section-num"><span>03b — Archivo cronológico</span></div>
+            <h2 className="display-m serif">Tres años, <em>un proyecto a la vez.</em></h2>
+          </div>
+          <p className="lt-lead">
+            Cada mes una historia distinta. Click en cualquier mes para ver qué estábamos construyendo.
+          </p>
+        </div>
+
+        {/* Vista del proyecto seleccionado */}
+        <div className="lt-viewer">
+          <div className="lt-img" key={activo}>
+            <img src={p.img} alt={p.titulo} />
+            <div className="lt-fecha mono">{p.mes} · {p.año}</div>
+          </div>
+          <div className="lt-info" key={`info-${activo}`}>
+            <div className="mono lt-cliente">{p.cliente}</div>
+            <h3 className="display-s serif">{p.titulo}</h3>
+            <div className="lt-meta">
+              <div className="lt-row">
+                <span className="mono">Tipo</span>
+                <span>{p.tipo}</span>
+              </div>
+              <div className="lt-row">
+                <span className="mono">Madera</span>
+                <span>{p.madera}</span>
+              </div>
+            </div>
+            <p className="lt-nota">{p.nota}</p>
+            <div className="lt-counter mono">
+              {String(activo + 1).padStart(2, '0')} / {String(proyectos.length).padStart(2, '0')}
+            </div>
+          </div>
+        </div>
+
+        {/* Eje cronológico */}
+        <div className="lt-eje-wrap">
+          <div className="lt-axis-line" />
+          <div className="lt-eje">
+            {proyectos.map((proy, i) => {
+              const isFirstOfYear = i === 0 || proyectos[i-1].año !== proy.año;
+              return (
+                <button
+                  key={i}
+                  className={`lt-tick ${activo === i ? 'active' : ''}`}
+                  onClick={() => setActivo(i)}
+                  aria-label={`${proy.mes} ${proy.año} — ${proy.titulo}`}
+                >
+                  {isFirstOfYear && (
+                    <span className="lt-año serif">{proy.año}</span>
+                  )}
+                  <span className="lt-tick-bar" />
+                  <span className="lt-mes mono">{proy.mes}</span>
+                  <span className="lt-tick-thumb">
+                    <img src={proy.img} alt="" />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="lt-controls">
+            <button className="lt-nav" onClick={() => setActivo(Math.max(0, activo - 1))} disabled={activo === 0}>
+              ← Anterior
+            </button>
+            <button className="lt-nav" onClick={() => setActivo(Math.min(proyectos.length - 1, activo + 1))} disabled={activo === proyectos.length - 1}>
+              Siguiente →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const ltStyles = `
+.linea-tiempo { background: var(--ink); color: var(--bone); border-top: 1px solid var(--ink); }
+.lt-head {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 60px;
+}
+.lt-head .section-num { color: rgba(245, 242, 236, 0.5); }
+.lt-head .section-num::before { background: var(--bone); }
+.lt-head h2 em { font-style: italic; color: var(--wood); }
+.lt-lead { font-size: 15px; line-height: 1.55; color: rgba(245, 242, 236, 0.7); max-width: 360px; }
+
+.lt-viewer {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0;
+  margin-bottom: 80px;
+  border: 1px solid rgba(245, 242, 236, 0.14);
+}
+.lt-img {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--ink-soft);
+  animation: ltFade 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.lt-img img { width: 100%; height: 100%; object-fit: cover; }
+.lt-fecha {
+  position: absolute;
+  top: 18px; left: 18px;
+  background: var(--bone);
+  color: var(--ink);
+  padding: 8px 14px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+.lt-info {
+  padding: 48px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  background: var(--ink-soft);
+  animation: ltFade 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.05s both;
+}
+.lt-cliente { color: rgba(245, 242, 236, 0.5); }
+.lt-info h3 { font-size: 44px; }
+.lt-meta {
+  display: flex; flex-direction: column;
+  border-top: 1px solid rgba(245, 242, 236, 0.14);
+  border-bottom: 1px solid rgba(245, 242, 236, 0.14);
+  margin-top: 8px;
+}
+.lt-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(245, 242, 236, 0.08);
+  font-size: 14px;
+  align-items: baseline;
+}
+.lt-row:last-child { border-bottom: none; }
+.lt-row .mono { color: rgba(245, 242, 236, 0.5); }
+.lt-nota {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(245, 242, 236, 0.78);
+  font-style: italic;
+  font-family: var(--serif);
+  font-size: 17px;
+  letter-spacing: -0.005em;
+}
+.lt-counter {
+  position: absolute;
+  bottom: 24px; right: 28px;
+  color: rgba(245, 242, 236, 0.4);
+}
+
+@keyframes ltFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Eje */
+.lt-eje-wrap {
+  position: relative;
+  padding: 32px 0 0;
+}
+.lt-axis-line {
+  position: absolute;
+  top: 70px; left: 0; right: 0;
+  height: 1px;
+  background: rgba(245, 242, 236, 0.18);
+}
+.lt-eje {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+  position: relative;
+}
+.lt-tick {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0 12px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+.lt-año {
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--wood);
+  margin-bottom: 8px;
+  height: 26px;
+  line-height: 1;
+}
+.lt-tick:not(:first-of-type) .lt-año { margin-left: -8px; }
+.lt-tick-bar {
+  width: 1px;
+  height: 28px;
+  background: rgba(245, 242, 236, 0.4);
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 1;
+}
+.lt-mes {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: rgba(245, 242, 236, 0.55);
+  transition: color 0.3s ease;
+}
+.lt-tick-thumb {
+  position: absolute;
+  bottom: -88px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.6);
+  opacity: 0;
+  pointer-events: none;
+  width: 72px; height: 72px;
+  overflow: hidden;
+  border: 1px solid rgba(245, 242, 236, 0.3);
+  background: var(--ink-soft);
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.lt-tick-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.lt-tick:hover .lt-tick-bar { background: var(--wood); height: 36px; }
+.lt-tick:hover .lt-mes { color: var(--bone); }
+.lt-tick:hover .lt-tick-thumb { opacity: 1; transform: translateX(-50%) scale(1); }
+
+.lt-tick.active .lt-tick-bar { background: var(--wood); height: 44px; width: 2px; }
+.lt-tick.active .lt-mes { color: var(--wood); font-weight: 500; }
+.lt-tick.active .lt-año { color: var(--wood); }
+
+.lt-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 140px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(245, 242, 236, 0.14);
+}
+.lt-nav {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone);
+  padding: 12px 0;
+  transition: color 0.3s ease;
+}
+.lt-nav:disabled { color: rgba(245, 242, 236, 0.25); cursor: not-allowed; }
+.lt-nav:not(:disabled):hover { color: var(--wood); }
+
+@media (max-width: 980px) {
+  .lt-head { grid-template-columns: 1fr; gap: 24px; }
+  .lt-viewer { grid-template-columns: 1fr; }
+  .lt-info { padding: 32px 24px; }
+  .lt-eje { grid-template-columns: repeat(6, 1fr); gap: 2px; }
+  .lt-tick-thumb { display: none; }
+  .lt-controls { margin-top: 60px; }
+}
+@media (max-width: 540px) {
+  .lt-eje { grid-template-columns: repeat(4, 1fr); }
+  .lt-año { font-size: 16px; }
+}
+`;
+
+
+/* ========================= configurador.jsx ========================= */
+/* Configurador interactivo — el corazón del sitio */
+function Configurador() {
+  const [tipo, setTipo] = useState('mesa-comedor');
+  const [madera, setMadera] = useState('roble');
+  const [acabado, setAcabado] = useState('natural');
+  const [base, setBase] = useState('fluted');
+  const [largo, setLargo] = useState(220);
+  const [ancho, setAncho] = useState(100);
+
+  const tipos = {
+    'mesa-comedor':  { label: 'Mesa de comedor', tiempo: '6–8 sem', precioBase: 1450 },
+    'mesa-centro':   { label: 'Mesa de centro',  tiempo: '4–5 sem', precioBase: 680  },
+    'vanity':        { label: 'Vanity de baño',  tiempo: '5–7 sem', precioBase: 980  },
+    'meson':         { label: 'Mesón / barra',   tiempo: '7–10 sem', precioBase: 1850 },
+  };
+
+  const maderas = {
+    'roble':   { label: 'Roble americano', mult: 1.0,  color: '#C8A77A' },
+    'rauli':   { label: 'Raulí nativo',     mult: 1.1,  color: '#A87752' },
+    'lenga':   { label: 'Lenga clara',      mult: 0.95, color: '#D9B58A' },
+    'manio':   { label: 'Mañío macizo',     mult: 1.2,  color: '#8A6A47' },
+  };
+
+  const acabados = {
+    'natural':    { label: 'Natural / aceitado', filter: 'none' },
+    'ennegrecido':{ label: 'Ennegrecido',         filter: 'brightness(0.18) saturate(0.4)' },
+    'ahumado':    { label: 'Ahumado oscuro',      filter: 'brightness(0.55) saturate(0.7) hue-rotate(-10deg)' },
+    'cera-clara': { label: 'Cera clara',          filter: 'brightness(1.12) saturate(0.85)' },
+  };
+
+  const bases = {
+    'fluted':  'Fluted (estriada)',
+    'bloque':  'Bloque macizo',
+    'cruz':    'Cruz de madera',
+    'patin':   'Patín metálico',
+  };
+
+  // precio estimado: base × área-factor × madera-mult
+  const tipoData = tipos[tipo];
+  const areaFactor = (largo * ancho) / (220 * 100);
+  const precio = Math.round(tipoData.precioBase * areaFactor * maderas[madera].mult / 10) * 10;
+  const precioMax = Math.round(precio * 1.35 / 10) * 10;
+
+  const woodColor = maderas[madera].color;
+  const acabadoFilter = acabados[acabado].filter;
+
+  // Preview SVG dinámico
+  const renderPreview = () => {
+    const w = 480, h = 320;
+    const tableW = Math.min(380, 140 + largo * 0.9);
+    const tableH = Math.min(80, 40 + ancho * 0.2);
+
+    if (tipo === 'mesa-comedor' || tipo === 'meson') {
+      const cx = w / 2, topY = h * 0.45;
+      return (
+        <svg viewBox={`0 0 ${w} ${h}`} className="cfg-svg">
+          {/* sombra */}
+          <ellipse cx={cx} cy={h - 30} rx={tableW * 0.5} ry={8} fill="rgba(0,0,0,0.18)" />
+          {/* tablero */}
+          <g style={{ filter: acabadoFilter }}>
+            <rect x={cx - tableW/2} y={topY} width={tableW} height={tableH * 0.35} fill={woodColor} />
+            <rect x={cx - tableW/2} y={topY} width={tableW} height={4} fill="rgba(255,255,255,0.18)" />
+            <rect x={cx - tableW/2} y={topY + tableH * 0.32} width={tableW} height={3} fill="rgba(0,0,0,0.25)" />
+            {/* base */}
+            {base === 'fluted' && (
+              <>
+                {[0, 1].map(i => (
+                  <g key={i}>
+                    <rect x={cx - tableW * 0.32 + i * tableW * 0.5 - 28} y={topY + tableH * 0.35} width={56} height={120} fill={woodColor} />
+                    {Array.from({length: 12}).map((_, j) => (
+                      <rect key={j} x={cx - tableW * 0.32 + i * tableW * 0.5 - 26 + j * 4.5} y={topY + tableH * 0.35} width={2} height={120} fill="rgba(0,0,0,0.28)" />
+                    ))}
+                  </g>
+                ))}
+              </>
+            )}
+            {base === 'bloque' && (
+              <>
+                <rect x={cx - tableW * 0.32 - 24} y={topY + tableH * 0.35} width={48} height={120} fill={woodColor} />
+                <rect x={cx + tableW * 0.32 - 24} y={topY + tableH * 0.35} width={48} height={120} fill={woodColor} />
+              </>
+            )}
+            {base === 'cruz' && (
+              <>
+                <rect x={cx - tableW * 0.34} y={topY + tableH * 0.35 + 40} width={tableW * 0.68} height={14} fill={woodColor} transform={`rotate(8 ${cx} ${topY + tableH * 0.35 + 47})`} />
+                <rect x={cx - tableW * 0.34} y={topY + tableH * 0.35 + 40} width={tableW * 0.68} height={14} fill={woodColor} transform={`rotate(-8 ${cx} ${topY + tableH * 0.35 + 47})`} />
+                <rect x={cx - tableW * 0.32} y={topY + tableH * 0.35} width={20} height={120} fill={woodColor} />
+                <rect x={cx + tableW * 0.32 - 20} y={topY + tableH * 0.35} width={20} height={120} fill={woodColor} />
+              </>
+            )}
+            {base === 'patin' && (
+              <>
+                <rect x={cx - tableW * 0.36} y={topY + tableH * 0.35 + 100} width={tableW * 0.72} height={6} fill="#1A1815" />
+                <rect x={cx - tableW * 0.34} y={topY + tableH * 0.35} width={6} height={108} fill="#1A1815" />
+                <rect x={cx + tableW * 0.34 - 6} y={topY + tableH * 0.35} width={6} height={108} fill="#1A1815" />
+              </>
+            )}
+          </g>
+          {/* dim lines */}
+          <g stroke="#1A1815" strokeWidth="0.6" opacity="0.5">
+            <line x1={cx - tableW/2} y1={topY - 20} x2={cx + tableW/2} y2={topY - 20} />
+            <line x1={cx - tableW/2} y1={topY - 24} x2={cx - tableW/2} y2={topY - 16} />
+            <line x1={cx + tableW/2} y1={topY - 24} x2={cx + tableW/2} y2={topY - 16} />
+          </g>
+          <text x={cx} y={topY - 26} textAnchor="middle" fontFamily="var(--mono)" fontSize="9" letterSpacing="2" fill="#1A1815">{largo} CM</text>
+        </svg>
+      );
+    }
+
+    if (tipo === 'mesa-centro') {
+      return (
+        <svg viewBox={`0 0 ${w} ${h}`} className="cfg-svg">
+          <ellipse cx={w/2} cy={h - 30} rx={tableW * 0.45} ry={6} fill="rgba(0,0,0,0.18)" />
+          <g style={{ filter: acabadoFilter }}>
+            <rect x={w/2 - tableW * 0.42} y={h * 0.55} width={tableW * 0.84} height={70} fill={woodColor} />
+            <rect x={w/2 - tableW * 0.42} y={h * 0.55} width={tableW * 0.84} height={6} fill="rgba(255,255,255,0.2)" />
+            {/* wood grain */}
+            {Array.from({length: 5}).map((_, i) => (
+              <rect key={i} x={w/2 - tableW * 0.42} y={h * 0.55 + 12 + i * 12} width={tableW * 0.84} height={1} fill="rgba(0,0,0,0.18)" />
+            ))}
+          </g>
+        </svg>
+      );
+    }
+
+    if (tipo === 'vanity') {
+      return (
+        <svg viewBox={`0 0 ${w} ${h}`} className="cfg-svg">
+          <g style={{ filter: acabadoFilter }}>
+            <rect x={w/2 - tableW * 0.45} y={h * 0.4} width={tableW * 0.9} height={150} fill={woodColor} />
+            {/* fluted front */}
+            {Array.from({length: 26}).map((_, i) => (
+              <rect key={i} x={w/2 - tableW * 0.43 + i * (tableW * 0.86 / 26)} y={h * 0.42} width={1.5} height={140} fill="rgba(0,0,0,0.28)" />
+            ))}
+            <rect x={w/2 - tableW * 0.45} y={h * 0.4} width={tableW * 0.9} height={6} fill="rgba(255,255,255,0.2)" />
+          </g>
+          {/* sink */}
+          <ellipse cx={w/2} cy={h * 0.4 - 4} rx={50} ry={10} fill="#EDE8DE" />
+        </svg>
+      );
+    }
+  };
+
+  // brief para WhatsApp
+  const briefMsg = `Hola Manos Verdes 👋\n\nQuiero cotizar:\n• Tipo: ${tipoData.label}\n• Medidas: ${largo} × ${ancho} cm\n• Madera: ${maderas[madera].label}\n• Acabado: ${acabados[acabado].label}\n• Base: ${bases[base]}\n\nEstimado de referencia: USD ${precio.toLocaleString()}–${precioMax.toLocaleString()}`;
+
+  return (
+    <section className="section configurador" id="configurador">
+      <div className="shell">
+        <div className="cfg-head">
+          <div className="section-num"><span>04 — Configurador en vivo</span></div>
+          <h2 className="display-l serif">
+            Diseña tu pieza,<br/><em>nosotros la hacemos.</em>
+          </h2>
+          <p className="cfg-lead">
+            Ajusta tipo, madera, acabado y dimensiones. El preview cambia en tiempo real y obtienes un estimado de precio + tiempo de fabricación.
+          </p>
+        </div>
+
+        <div className="cfg-grid">
+          {/* preview */}
+          <div className="cfg-preview">
+            <div className="cfg-canvas">
+              {renderPreview()}
+              <div className="cfg-grid-bg" />
+            </div>
+            <div className="cfg-readout">
+              <div className="readout-row">
+                <span className="mono">Tipo</span>
+                <span className="serif">{tipoData.label}</span>
+              </div>
+              <div className="readout-row">
+                <span className="mono">Madera</span>
+                <span className="serif">{maderas[madera].label}</span>
+              </div>
+              <div className="readout-row">
+                <span className="mono">Acabado</span>
+                <span className="serif">{acabados[acabado].label}</span>
+              </div>
+              <div className="readout-row">
+                <span className="mono">Base</span>
+                <span className="serif">{bases[base]}</span>
+              </div>
+              <div className="readout-row">
+                <span className="mono">Medidas</span>
+                <span className="serif">{largo} × {ancho} cm</span>
+              </div>
+            </div>
+          </div>
+
+          {/* controles */}
+          <div className="cfg-controls">
+            <div className="cfg-group">
+              <div className="cfg-label mono">01 — Tipo de pieza</div>
+              <div className="cfg-options">
+                {Object.entries(tipos).map(([k, v]) => (
+                  <button key={k} className={`cfg-opt ${tipo === k ? 'active' : ''}`} onClick={() => setTipo(k)}>
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="cfg-group">
+              <div className="cfg-label mono">02 — Madera</div>
+              <div className="cfg-swatches">
+                {Object.entries(maderas).map(([k, v]) => (
+                  <button key={k} className={`cfg-swatch ${madera === k ? 'active' : ''}`} onClick={() => setMadera(k)}>
+                    <span className="swatch-color" style={{ background: v.color }} />
+                    <span>{v.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="cfg-group">
+              <div className="cfg-label mono">03 — Acabado</div>
+              <div className="cfg-options">
+                {Object.entries(acabados).map(([k, v]) => (
+                  <button key={k} className={`cfg-opt ${acabado === k ? 'active' : ''}`} onClick={() => setAcabado(k)}>
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="cfg-group">
+              <div className="cfg-label mono">04 — Base / estructura</div>
+              <div className="cfg-options">
+                {Object.entries(bases).map(([k, v]) => (
+                  <button key={k} className={`cfg-opt ${base === k ? 'active' : ''}`} onClick={() => setBase(k)}>
+                    {v}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="cfg-group">
+              <div className="cfg-label mono">05 — Dimensiones</div>
+              <div className="cfg-slider">
+                <div className="slider-head">
+                  <span>Largo</span>
+                  <span className="serif">{largo} cm</span>
+                </div>
+                <input type="range" min="80" max="400" step="10" value={largo} onChange={(e) => setLargo(+e.target.value)} />
+              </div>
+              <div className="cfg-slider">
+                <div className="slider-head">
+                  <span>Ancho</span>
+                  <span className="serif">{ancho} cm</span>
+                </div>
+                <input type="range" min="60" max="160" step="5" value={ancho} onChange={(e) => setAncho(+e.target.value)} />
+              </div>
+            </div>
+
+            <div className="cfg-summary">
+              <div className="sum-row">
+                <span className="mono">Tiempo estimado</span>
+                <span className="serif">{tipoData.tiempo}</span>
+              </div>
+              <div className="sum-row sum-price">
+                <span className="mono">Estimado de referencia</span>
+                <span className="serif sum-amount">USD {precio.toLocaleString()}–{precioMax.toLocaleString()}</span>
+              </div>
+              <p className="sum-note mono">* Estimado para referencia. Cotización final tras revisar planos y selección de madera.</p>
+              <a
+                className="btn btn-solid cfg-cta"
+                href={`https://wa.me/56993231651?text=${encodeURIComponent(briefMsg)}`}
+                target="_blank"
+                rel="noopener"
+              >
+                Enviar brief por WhatsApp <span className="arrow">→</span>
+              </a>
+              <a className="btn btn-ghost" href="#brief">
+                O completar formulario detallado <span className="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const cfgStyles = `
+.configurador { background: var(--ink); color: var(--bone); border-top: 1px solid var(--ink); }
+.cfg-head { max-width: 760px; margin-bottom: 60px; }
+.cfg-head .section-num { color: rgba(245, 242, 236, 0.5); }
+.cfg-head .section-num::before { background: var(--bone); }
+.cfg-head h2 em { font-style: italic; color: var(--wood); }
+.cfg-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(245, 242, 236, 0.75);
+  max-width: 480px;
+  margin-top: 24px;
+}
+
+.cfg-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.cfg-preview { position: sticky; top: 100px; }
+.cfg-canvas {
+  position: relative;
+  background: var(--bone);
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.cfg-svg { width: 100%; height: 100%; }
+.cfg-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(26,24,21,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26,24,21,0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.cfg-readout {
+  background: var(--ink-soft);
+  border: 1px solid rgba(245, 242, 236, 0.1);
+  margin-top: 16px;
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 32px;
+}
+.readout-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.readout-row .mono { color: rgba(245, 242, 236, 0.5); font-size: 9px; letter-spacing: 0.16em; }
+.readout-row .serif { font-size: 16px; }
+
+.cfg-controls { display: flex; flex-direction: column; gap: 36px; }
+.cfg-group { display: flex; flex-direction: column; gap: 14px; }
+.cfg-label {
+  color: rgba(245, 242, 236, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(245, 242, 236, 0.14);
+}
+
+.cfg-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.cfg-opt {
+  padding: 12px 18px;
+  border: 1px solid rgba(245, 242, 236, 0.22);
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--bone);
+  transition: all 0.3s ease;
+}
+.cfg-opt:hover { border-color: var(--bone); }
+.cfg-opt.active {
+  background: var(--bone);
+  color: var(--ink);
+  border-color: var(--bone);
+}
+
+.cfg-swatches { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cfg-swatch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(245, 242, 236, 0.22);
+  font-size: 13px;
+  color: var(--bone);
+  transition: all 0.3s ease;
+}
+.cfg-swatch .swatch-color {
+  width: 22px; height: 22px;
+  display: inline-block;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);
+}
+.cfg-swatch:hover { border-color: var(--bone); }
+.cfg-swatch.active { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+
+.cfg-slider { display: flex; flex-direction: column; gap: 10px; }
+.slider-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(245, 242, 236, 0.7);
+}
+.slider-head .serif { font-family: var(--serif); font-size: 22px; letter-spacing: -0.01em; text-transform: none; color: var(--bone); }
+
+.cfg-slider input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 1px;
+  background: rgba(245, 242, 236, 0.3);
+  outline: none;
+}
+.cfg-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 18px; height: 18px;
+  background: var(--wood);
+  cursor: pointer;
+  border: 2px solid var(--ink);
+  box-shadow: 0 0 0 1px var(--wood);
+}
+.cfg-slider input[type="range"]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  background: var(--wood);
+  cursor: pointer;
+  border: 2px solid var(--ink);
+}
+
+.cfg-summary {
+  margin-top: 20px;
+  padding: 28px;
+  background: var(--green-deep);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sum-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245, 242, 236, 0.14);
+}
+.sum-row .mono { color: rgba(245, 242, 236, 0.6); }
+.sum-row .serif { font-size: 22px; }
+.sum-price .sum-amount { font-size: 30px; color: var(--wood); }
+.sum-note { font-size: 9px; color: rgba(245, 242, 236, 0.5); line-height: 1.5; }
+.cfg-cta { background: var(--wood); border-color: var(--wood); color: var(--ink); margin-top: 8px; justify-content: center; }
+.cfg-cta:hover { background: var(--bone); border-color: var(--bone); color: var(--ink); }
+.cfg-summary .btn-ghost { color: var(--bone); border-color: rgba(245, 242, 236, 0.4); justify-content: center; }
+.cfg-summary .btn-ghost:hover { background: var(--bone); color: var(--ink); }
+
+@media (max-width: 980px) {
+  .cfg-grid { grid-template-columns: 1fr; }
+  .cfg-preview { position: relative; top: 0; }
+  .cfg-readout { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 540px) {
+  .cfg-readout { grid-template-columns: 1fr; }
+  .cfg-swatches { grid-template-columns: 1fr; }
+}
+`;
+
+
+/* ========================= proceso-brief.jsx ========================= */
+/* Proceso (timeline horizontal) + Brief form + Footer */
+function Proceso() {
+  const steps = [
+    { num: '01', title: 'Conversación', tiempo: '1–2 días', desc: 'Charla inicial por WhatsApp o en el taller. Entendemos el espacio, uso y referencias.' },
+    { num: '02', title: 'Boceto + plano', tiempo: '5–7 días', desc: 'Bocetos a mano y planos 3D. Iteramos hasta que la pieza cuadra contigo.' },
+    { num: '03', title: 'Madera y cotización', tiempo: '2–3 días', desc: 'Selección de tablones específicos. Cotización final con plazos firmes.' },
+    { num: '04', title: 'Taller', tiempo: '4–8 sem', desc: 'Carpintería, ensamble, tratamiento. Te enviamos fotos del proceso cada semana.' },
+    { num: '05', title: 'Entrega e instalación', tiempo: '1 día', desc: 'Llevamos, instalamos y dejamos lista la pieza en tu espacio.' },
+  ];
+
+  return (
+    <section className="section proceso" id="proceso">
+      <div className="shell">
+        <div className="proc-head">
+          <div className="section-num"><span>05 — De la idea a tu casa</span></div>
+          <h2 className="display-m serif">El proceso, <em>sin sorpresas.</em></h2>
+        </div>
+
+        <div className="proc-timeline">
+          <div className="proc-line" />
+          {steps.map((s, i) => (
+            <div className="proc-step reveal" key={i}>
+              <div className="step-dot" />
+              <div className="step-num mono">{s.num}</div>
+              <h3 className="serif">{s.title}</h3>
+              <div className="step-time mono">{s.tiempo}</div>
+              <p>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Brief() {
+  const [form, setForm] = useState({
+    nombre: '', email: '', tipo: '', espacio: '', presupuesto: '', plazo: '', mensaje: ''
+  });
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSent(true);
+  };
+
+  if (sent) {
+    return (
+      <section className="section brief" id="brief">
+        <div className="shell">
+          <div className="brief-success">
+            <div className="section-num"><span>06 — Brief enviado</span></div>
+            <h2 className="display-m serif">Recibido. <em>Te escribimos en 24h.</em></h2>
+            <p>Mientras tanto, puedes adelantarnos referencias por WhatsApp.</p>
+            <a href="https://wa.me/56993231651" className="btn btn-solid">
+              Abrir WhatsApp <span className="arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="section brief" id="brief">
+      <div className="shell">
+        <div className="brief-grid">
+          <div className="brief-side">
+            <div className="section-num"><span>06 — Brief de proyecto</span></div>
+            <h2 className="display-m serif">Cuéntanos<br/>qué <em>imaginas.</em></h2>
+            <p className="brief-lead">
+              Más detallado que un mensaje de WhatsApp. Te respondemos en menos de 24 horas con bocetos preliminares.
+            </p>
+            <div className="brief-contact">
+              <div className="bc-row">
+                <span className="mono">WhatsApp</span>
+                <a href="https://wa.me/56993231651">+56 9 9323 1651</a>
+              </div>
+              <div className="bc-row">
+                <span className="mono">Instagram</span>
+                <a href="https://instagram.com/manos_verde_woodwork" target="_blank" rel="noopener">@manos_verde_woodwork</a>
+              </div>
+              <div className="bc-row">
+                <span className="mono">Taller</span>
+                <span>Santiago, Chile · cita previa</span>
+              </div>
+            </div>
+          </div>
+
+          <form className="brief-form" onSubmit={handleSubmit}>
+            <div className="bf-row">
+              <label>
+                <span className="mono">Nombre</span>
+                <input type="text" required value={form.nombre} onChange={(e) => setForm({...form, nombre: e.target.value})} />
+              </label>
+              <label>
+                <span className="mono">Email</span>
+                <input type="email" required value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
+              </label>
+            </div>
+
+            <label>
+              <span className="mono">Tipo de pieza</span>
+              <select required value={form.tipo} onChange={(e) => setForm({...form, tipo: e.target.value})}>
+                <option value="">— Selecciona —</option>
+                <option>Mesa de comedor</option>
+                <option>Mesa de centro</option>
+                <option>Vanity / mueble de baño</option>
+                <option>Mesón / proyecto comercial</option>
+                <option>Sideboard / aparador</option>
+                <option>Otro</option>
+              </select>
+            </label>
+
+            <label>
+              <span className="mono">Espacio donde irá</span>
+              <input type="text" placeholder="ej: comedor 4×3m con piso de roble claro" value={form.espacio} onChange={(e) => setForm({...form, espacio: e.target.value})} />
+            </label>
+
+            <div className="bf-row">
+              <label>
+                <span className="mono">Presupuesto referencial</span>
+                <select value={form.presupuesto} onChange={(e) => setForm({...form, presupuesto: e.target.value})}>
+                  <option value="">—</option>
+                  <option>Menos de USD 800</option>
+                  <option>USD 800 – 1.500</option>
+                  <option>USD 1.500 – 3.000</option>
+                  <option>USD 3.000 – 6.000</option>
+                  <option>Más de USD 6.000</option>
+                </select>
+              </label>
+              <label>
+                <span className="mono">Plazo deseado</span>
+                <select value={form.plazo} onChange={(e) => setForm({...form, plazo: e.target.value})}>
+                  <option value="">—</option>
+                  <option>Lo antes posible</option>
+                  <option>1–2 meses</option>
+                  <option>3–4 meses</option>
+                  <option>Sin apuro</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              <span className="mono">Cuéntanos más (referencias, ideas, contexto)</span>
+              <textarea rows="5" value={form.mensaje} onChange={(e) => setForm({...form, mensaje: e.target.value})} />
+            </label>
+
+            <button type="submit" className="btn btn-solid bf-submit">
+              Enviar brief <span className="arrow">→</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer" id="contacto">
+      <div className="footer-grid">
+        <div>
+          <div className="nav-logo" style={{color: 'var(--bone)', marginBottom: 24}}>
+            <span className="mark" style={{background: 'var(--wood)'}}></span>
+            <span>Manos Verdes</span>
+          </div>
+          <p style={{maxWidth: 360, color: 'rgba(245,242,236,0.65)', fontSize: 14, lineHeight: 1.55}}>
+            Taller de muebles a medida en Chile. Madera maciza, diseño honesto, oficio humano.
+          </p>
+        </div>
+        <div>
+          <h4>Navegar</h4>
+          <ul>
+            <li><a href="#manifiesto">Manifiesto</a></li>
+            <li><a href="#galeria">Proyectos</a></li>
+            <li><a href="#configurador">Configurador</a></li>
+            <li><a href="#proceso">Proceso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="https://wa.me/56993231651">+56 9 9323 1651</a></li>
+            <li><a href="https://instagram.com/manos_verde_woodwork" target="_blank" rel="noopener">Instagram</a></li>
+            <li>Santiago, Chile</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Servicios</h4>
+          <ul>
+            <li>Muebles a medida</li>
+            <li>Proyectos comerciales</li>
+            <li>Restauración</li>
+            <li>Asesoría de diseño</li>
+          </ul>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <span>© 2026 Manos Verdes Woodwork</span>
+        <span>Hecho con madera y código</span>
+      </div>
+    </footer>
+  );
+}
+
+const procStyles = `
+.proceso { background: var(--bone-2); border-top: 1px solid var(--line); }
+.proc-head { margin-bottom: 80px; max-width: 700px; }
+.proc-head h2 em { font-style: italic; color: var(--green); }
+
+.proc-timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  position: relative;
+  padding-top: 32px;
+}
+.proc-line {
+  position: absolute;
+  top: 38px; left: 0; right: 0;
+  height: 1px;
+  background: var(--line-strong);
+}
+.proc-step {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  padding-right: 24px;
+  padding-top: 20px;
+}
+.step-dot {
+  position: absolute;
+  top: -2px; left: 0;
+  width: 12px; height: 12px;
+  background: var(--ink);
+  border-radius: 50%;
+}
+.step-num { color: var(--muted); margin-top: 4px; }
+.proc-step h3 { font-size: 26px; line-height: 1.05; margin-top: 4px; }
+.step-time { color: var(--green); padding: 4px 0; }
+.proc-step p { font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
+
+@media (max-width: 820px) {
+  .proc-timeline { grid-template-columns: 1fr; gap: 32px; }
+  .proc-line { left: 6px; right: auto; top: 0; bottom: 0; width: 1px; height: auto; }
+  .proc-step { padding-left: 32px; padding-top: 0; padding-right: 0; }
+  .step-dot { left: 0; top: 6px; }
+}
+
+/* Brief */
+.brief { background: var(--bone); border-top: 1px solid var(--line); }
+.brief-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+.brief-side h2 { margin-top: 16px; }
+.brief-side h2 em { font-style: italic; color: var(--green); }
+.brief-lead { margin-top: 24px; font-size: 15px; line-height: 1.6; color: var(--ink-soft); max-width: 360px; }
+.brief-contact {
+  margin-top: 40px;
+  border-top: 1px solid var(--line);
+  display: flex; flex-direction: column;
+}
+.bc-row {
+  display: grid; grid-template-columns: 100px 1fr;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  align-items: baseline;
+  gap: 16px;
+}
+.bc-row .mono { color: var(--muted); }
+.bc-row a:hover { color: var(--green); }
+
+.brief-form {
+  background: var(--bone-2);
+  padding: 40px;
+  display: flex; flex-direction: column; gap: 22px;
+  border: 1px solid var(--line);
+}
+.brief-form label { display: flex; flex-direction: column; gap: 6px; }
+.brief-form .mono { color: var(--muted); }
+.brief-form input, .brief-form select, .brief-form textarea {
+  padding: 14px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line-strong);
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.brief-form input:focus, .brief-form select:focus, .brief-form textarea:focus {
+  border-bottom-color: var(--green);
+}
+.brief-form textarea { font-family: var(--sans); font-size: 14px; line-height: 1.55; resize: vertical; }
+.bf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.bf-submit { align-self: flex-start; margin-top: 8px; }
+
+.brief-success { max-width: 720px; }
+.brief-success h2 em { font-style: italic; color: var(--green); }
+.brief-success p { margin: 24px 0; font-size: 16px; color: var(--ink-soft); }
+
+@media (max-width: 820px) {
+  .brief-grid { grid-template-columns: 1fr; gap: 40px; }
+  .bf-row { grid-template-columns: 1fr; }
+  .brief-form { padding: 28px 20px; }
+}
+`;
+
+
+/* ========================= app.jsx ========================= */
+/* Mount + glue */
+const { createRoot } = ReactDOM;
+
+function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return (
+    <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
+      <a href="#top" className="nav-logo">
+        <span className="mark"></span>
+        <span>Manos Verdes</span>
+      </a>
+      <div className="nav-links">
+        <a href="#manifiesto">Manifiesto</a>
+        <a href="#galeria">Proyectos</a>
+        <a href="#configurador">Configurador</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <a href="#brief" className="nav-cta">Solicitar brief</a>
+    </nav>
+  );
+}
+
+function MarqueeBand() {
+  return (
+    <div className="marquee">
+      <div className="marquee-track">
+        <span><span className="serif"><em>Mesas a medida</em></span><span className="dot"></span></span>
+        <span><span className="serif"><em>Vanities únicos</em></span><span className="dot"></span></span>
+        <span><span className="serif"><em>Mesones comerciales</em></span><span className="dot"></span></span>
+        <span><span className="serif"><em>Madera maciza chilena</em></span><span className="dot"></span></span>
+        <span><span className="serif"><em>Mesas a medida</em></span><span className="dot"></span></span>
+        <span><span className="serif"><em>Vanities únicos</em></span><span className="dot"></span></span>
+        <span><span className="serif"><em>Mesones comerciales</em></span><span className="dot"></span></span>
+        <span><span className="serif"><em>Madera maciza chilena</em></span><span className="dot"></span></span>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  // reveal-on-scroll
+  useEffect(() => {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) e.target.classList.add('in');
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <>
+      <Nav />
+      <main id="top">
+        <Hero />
+        <MarqueeBand />
+        <Manifiesto />
+        <Detalle />
+        <Galeria />
+        <LineaTiempo />
+        <Configurador />
+        <Proceso />
+        <Brief />
+      </main>
+      <Footer />
+
+      {/* Inject all styles */}
+      <style dangerouslySetInnerHTML={{ __html: heroStyles + manifiestoStyles + detalleStyles + galeriaStyles + ltStyles + cfgStyles + procStyles }} />
+    </>
+  );
+}
+
+createRoot(document.getElementById('root')).render(<App />);
+
+
+  </script>
+</body>
+</html>
