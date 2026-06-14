@@ -85,7 +85,7 @@ function Hero() {
           </p>
           <div className="hero-actions">
             <a href="#brief" className="btn btn-solid">
-              Solicitar brief <span className="arrow">→</span>
+              Agendar sesión <span className="arrow">→</span>
             </a>
             <a href="#galeria" className="btn btn-ghost">
               Ver proyectos <span className="arrow">→</span>
@@ -579,7 +579,7 @@ function Galeria() {
                 <div><dt className="mono">Tipo</dt><dd>{focus.tipo}</dd></div>
               </dl>
               <a href="#brief" className="btn btn-solid" onClick={() => setFocus(null)}>
-                Quiero algo similar <span className="arrow">→</span>
+                Agendar mi sesión <span className="arrow">→</span>
               </a>
             </div>
           </div>
@@ -1468,8 +1468,8 @@ const cfgStyles = `
 `;
 
 
-/* ========== proceso-brief.jsx ========== */
-/* Proceso (timeline horizontal) + Brief form + Footer */
+/* ========== proceso-taller.jsx ========== */
+/* Proceso (timeline horizontal) + Taller experiencial + Footer */
 function Proceso() {
   const steps = [
     { num: '01', title: 'Conversación', tiempo: '1–2 días', desc: 'Charla inicial por WhatsApp o en el taller. Entendemos el espacio, uso y referencias.' },
@@ -1504,123 +1504,121 @@ function Proceso() {
   );
 }
 
-function Brief() {
-  const [form, setForm] = useState({
-    nombre: '', email: '', tipo: '', espacio: '', presupuesto: '', plazo: '', mensaje: ''
-  });
-  const [sent, setSent] = useState(false);
+function Taller() {
+  const msg = `Hola Manos Verdes 👋
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSent(true);
-  };
+Quiero agendar el Taller Experiencial para armar mi propio mueble.
 
-  if (sent) {
-    return (
-      <section className="section brief" id="brief">
-        <div className="shell">
-          <div className="brief-success">
-            <div className="section-num"><span>06 — Brief enviado</span></div>
-            <h2 className="display-m serif">Recibido. <em>Te escribimos en 24h.</em></h2>
-            <p>Mientras tanto, puedes adelantarnos referencias por WhatsApp.</p>
-            <a href="https://wa.me/56993231651" className="btn btn-solid">
-              Abrir WhatsApp <span className="arrow">→</span>
-            </a>
-          </div>
-        </div>
-      </section>
-    );
-  }
+• Qué quiero armar:
+• Disponibilidad (días/horarios):
+• Experiencia previa con madera: ninguna / algo / avanzada
+
+¿Cuándo tienen el próximo cupo disponible?`;
 
   return (
-    <section className="section brief" id="brief">
+    <section className="section taller" id="brief">
       <div className="shell">
-        <div className="brief-grid">
-          <div className="brief-side">
-            <div className="section-num"><span>06 — Brief de proyecto</span></div>
-            <h2 className="display-m serif">Cuéntanos<br/>qué <em>imaginas.</em></h2>
-            <p className="brief-lead">
-              Más detallado que un mensaje de WhatsApp. Te respondemos en menos de 24 horas con bocetos preliminares.
-            </p>
-            <div className="brief-contact">
-              <div className="bc-row">
-                <span className="mono">WhatsApp</span>
-                <a href="https://wa.me/56993231651">+56 9 9323 1651</a>
+        <div className="taller-head">
+          <div className="section-num"><span>06 — Taller experiencial</span></div>
+          <h2 className="display-l serif">
+            Arma tu propio mueble,<br/>
+            <em>con tus manos.</em>
+          </h2>
+          <p className="taller-lead">
+            Un programa para quienes quieren más que comprar: aprender el oficio, usar herramientas profesionales y salir del taller con una pieza hecha por ti. Te guiamos paso a paso, desde el plano hasta el acabado.
+          </p>
+        </div>
+
+        <div className="taller-grid">
+          <div className="taller-price">
+            <div className="tp-tag mono">Programa completo</div>
+            <div className="tp-amount serif">
+              $280.000<span className="tp-currency">CLP</span>
+            </div>
+            <div className="tp-sub mono">Pago único · grupo reducido</div>
+
+            <div className="tp-divider" />
+
+            <div className="tp-block">
+              <div className="tp-block-title mono">Incluye</div>
+              <ul className="tp-list">
+                <li><span className="tp-check">✓</span>Clases guiadas con maestro carpintero</li>
+                <li><span className="tp-check">✓</span>Acceso a todas las herramientas del taller</li>
+                <li><span className="tp-check">✓</span>Asesoría de diseño, plano y selección de madera</li>
+                <li><span className="tp-check">✓</span>Aceitado y acabado final de tu pieza</li>
+              </ul>
+            </div>
+
+            <div className="tp-block tp-exclude">
+              <div className="tp-block-title mono">Aparte</div>
+              <p>
+                Los <em>materiales</em> (madera, herrajes, tornillería) se cotizan según el proyecto de cada alumno. Te ayudamos a comprarlos al mejor precio antes de empezar.
+              </p>
+            </div>
+
+            <a
+              className="btn btn-solid taller-cta"
+              href={`https://wa.me/56993231651?text=${encodeURIComponent(msg)}`}
+              target="_blank"
+              rel="noopener"
+            >
+              Agendar mi sesión <span className="arrow">→</span>
+            </a>
+            <div className="tp-foot mono">Respuesta en menos de 24 h</div>
+          </div>
+
+          <div className="taller-side">
+            <div className="taller-block">
+              <div className="taller-block-title mono">Formato</div>
+              <div className="taller-rows">
+                <div className="tr-row">
+                  <span className="mono">Duración</span>
+                  <span className="serif">4 sesiones · 3 h c/u</span>
+                </div>
+                <div className="tr-row">
+                  <span className="mono">Modalidad</span>
+                  <span className="serif">Grupal · hasta 4 personas</span>
+                </div>
+                <div className="tr-row">
+                  <span className="mono">Nivel</span>
+                  <span className="serif">Sin experiencia previa</span>
+                </div>
+                <div className="tr-row">
+                  <span className="mono">Lugar</span>
+                  <span className="serif">Taller en Santiago</span>
+                </div>
+                <div className="tr-row">
+                  <span className="mono">Horarios</span>
+                  <span className="serif">A coordinar · sáb/dom o tardes</span>
+                </div>
               </div>
-              <div className="bc-row">
-                <span className="mono">Instagram</span>
-                <a href="https://instagram.com/manos_verde_woodwork" target="_blank" rel="noopener">@manos_verde_woodwork</a>
-              </div>
-              <div className="bc-row">
-                <span className="mono">Taller</span>
-                <span>Santiago, Chile · cita previa</span>
+            </div>
+
+            <div className="taller-block">
+              <div className="taller-block-title mono">¿Qué puedes armar?</div>
+              <p className="taller-text">
+                Mesas de centro, bancos, repisas, mesas de noche, escritorios pequeños. La pieza se define contigo en la primera sesión según tu nivel, el tiempo y el presupuesto de materiales.
+              </p>
+            </div>
+
+            <div className="taller-block">
+              <div className="taller-block-title mono">Contacto directo</div>
+              <div className="taller-rows">
+                <div className="tr-row">
+                  <span className="mono">WhatsApp</span>
+                  <a href="https://wa.me/56993231651">+56 9 9323 1651</a>
+                </div>
+                <div className="tr-row">
+                  <span className="mono">Instagram</span>
+                  <a href="https://instagram.com/manos_verde_woodwork" target="_blank" rel="noopener">@manos_verde_woodwork</a>
+                </div>
+                <div className="tr-row">
+                  <span className="mono">Taller</span>
+                  <span>Santiago, Chile · cita previa</span>
+                </div>
               </div>
             </div>
           </div>
-
-          <form className="brief-form" onSubmit={handleSubmit}>
-            <div className="bf-row">
-              <label>
-                <span className="mono">Nombre</span>
-                <input type="text" required value={form.nombre} onChange={(e) => setForm({...form, nombre: e.target.value})} />
-              </label>
-              <label>
-                <span className="mono">Email</span>
-                <input type="email" required value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
-              </label>
-            </div>
-
-            <label>
-              <span className="mono">Tipo de pieza</span>
-              <select required value={form.tipo} onChange={(e) => setForm({...form, tipo: e.target.value})}>
-                <option value="">— Selecciona —</option>
-                <option>Mesa de comedor</option>
-                <option>Mesa de centro</option>
-                <option>Vanity / mueble de baño</option>
-                <option>Mesón / proyecto comercial</option>
-                <option>Sideboard / aparador</option>
-                <option>Otro</option>
-              </select>
-            </label>
-
-            <label>
-              <span className="mono">Espacio donde irá</span>
-              <input type="text" placeholder="ej: comedor 4×3m con piso de roble claro" value={form.espacio} onChange={(e) => setForm({...form, espacio: e.target.value})} />
-            </label>
-
-            <div className="bf-row">
-              <label>
-                <span className="mono">Presupuesto referencial</span>
-                <select value={form.presupuesto} onChange={(e) => setForm({...form, presupuesto: e.target.value})}>
-                  <option value="">—</option>
-                  <option>Menos de USD 800</option>
-                  <option>USD 800 – 1.500</option>
-                  <option>USD 1.500 – 3.000</option>
-                  <option>USD 3.000 – 6.000</option>
-                  <option>Más de USD 6.000</option>
-                </select>
-              </label>
-              <label>
-                <span className="mono">Plazo deseado</span>
-                <select value={form.plazo} onChange={(e) => setForm({...form, plazo: e.target.value})}>
-                  <option value="">—</option>
-                  <option>Lo antes posible</option>
-                  <option>1–2 meses</option>
-                  <option>3–4 meses</option>
-                  <option>Sin apuro</option>
-                </select>
-              </label>
-            </div>
-
-            <label>
-              <span className="mono">Cuéntanos más (referencias, ideas, contexto)</span>
-              <textarea rows="5" value={form.mensaje} onChange={(e) => setForm({...form, mensaje: e.target.value})} />
-            </label>
-
-            <button type="submit" className="btn btn-solid bf-submit">
-              Enviar brief <span className="arrow">→</span>
-            </button>
-          </form>
         </div>
       </div>
     </section>
@@ -1646,7 +1644,7 @@ function Footer() {
             <li><a href="#manifiesto">Manifiesto</a></li>
             <li><a href="#galeria">Proyectos</a></li>
             <li><a href="#proceso">Proceso</a></li>
-            <li><a href="#brief">Brief</a></li>
+            <li><a href="#brief">Agendar</a></li>
           </ul>
         </div>
         <div>
@@ -1660,9 +1658,9 @@ function Footer() {
         <div>
           <h4>Servicios</h4>
           <ul>
+            <li>Taller experiencial</li>
             <li>Muebles a medida</li>
             <li>Proyectos comerciales</li>
-            <li>Restauración</li>
             <li>Asesoría de diseño</li>
           </ul>
         </div>
@@ -1720,62 +1718,186 @@ const procStyles = `
   .step-dot { left: 0; top: 6px; }
 }
 
-/* Brief */
-.brief { background: var(--bone); border-top: 1px solid var(--line); }
-.brief-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
-.brief-side h2 { margin-top: 16px; }
-.brief-side h2 em { font-style: italic; color: var(--green); }
-.brief-lead { margin-top: 24px; font-size: 15px; line-height: 1.6; color: var(--ink-soft); max-width: 360px; }
-.brief-contact {
-  margin-top: 40px;
-  border-top: 1px solid var(--line);
-  display: flex; flex-direction: column;
+/* Taller experiencial */
+.taller { background: var(--bone); border-top: 1px solid var(--line); }
+.taller-head { max-width: 760px; margin-bottom: 60px; }
+.taller-head h2 { margin-top: 16px; }
+.taller-head h2 em { font-style: italic; color: var(--green); }
+.taller-lead {
+  margin-top: 28px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 520px;
 }
-.bc-row {
-  display: grid; grid-template-columns: 100px 1fr;
-  padding: 14px 0;
+
+.taller-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Tarjeta de precio */
+.taller-price {
+  background: var(--green-deep);
+  color: var(--bone);
+  padding: 44px 40px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.taller-price::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle at top right, rgba(193, 154, 107, 0.18), transparent 70%);
+  pointer-events: none;
+}
+.tp-tag {
+  color: var(--wood);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+.tp-amount {
+  font-size: clamp(56px, 8vw, 88px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tp-currency {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: rgba(245, 242, 236, 0.55);
+  padding-top: 14px;
+}
+.tp-sub {
+  color: rgba(245, 242, 236, 0.62);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  margin-top: -8px;
+}
+.tp-divider {
+  height: 1px;
+  background: rgba(245, 242, 236, 0.18);
+  margin: 8px 0 4px;
+}
+.tp-block { display: flex; flex-direction: column; gap: 12px; }
+.tp-block-title {
+  color: var(--wood);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+}
+.tp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tp-list li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: baseline;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(245, 242, 236, 0.92);
+}
+.tp-check {
+  color: var(--wood);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.tp-exclude p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(245, 242, 236, 0.78);
+}
+.tp-exclude p em {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--wood);
+  font-size: 1.05em;
+}
+.taller-cta {
+  margin-top: 12px;
+  background: var(--wood);
+  border-color: var(--wood);
+  color: var(--ink);
+  justify-content: center;
+  padding: 18px 24px;
+  font-size: 13px;
+}
+.taller-cta:hover {
+  background: var(--bone);
+  border-color: var(--bone);
+  color: var(--ink);
+}
+.tp-foot {
+  text-align: center;
+  color: rgba(245, 242, 236, 0.5);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  margin-top: 4px;
+}
+
+/* Side info */
+.taller-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.taller-block {
+  padding: 28px 0;
   border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.taller-block-title {
+  color: var(--green);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+}
+.taller-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 420px;
+}
+.taller-rows {
+  display: flex;
+  flex-direction: column;
+}
+.tr-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  padding: 10px 0;
+  gap: 16px;
   font-size: 14px;
   align-items: baseline;
-  gap: 16px;
+  border-bottom: 1px solid var(--line);
 }
-.bc-row .mono { color: var(--muted); }
-.bc-row a:hover { color: var(--green); }
+.tr-row:last-child { border-bottom: none; }
+.tr-row .mono { color: var(--muted); font-size: 11px; letter-spacing: 0.14em; }
+.tr-row .serif { font-size: 16px; letter-spacing: -0.005em; }
+.tr-row a { color: var(--ink); }
+.tr-row a:hover { color: var(--green); }
 
-.brief-form {
-  background: var(--bone-2);
-  padding: 40px;
-  display: flex; flex-direction: column; gap: 22px;
-  border: 1px solid var(--line);
+@media (max-width: 980px) {
+  .taller-grid { grid-template-columns: 1fr; gap: 24px; }
 }
-.brief-form label { display: flex; flex-direction: column; gap: 6px; }
-.brief-form .mono { color: var(--muted); }
-.brief-form input, .brief-form select, .brief-form textarea {
-  padding: 14px 0;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--line-strong);
-  font-family: var(--serif);
-  font-size: 18px;
-  color: var(--ink);
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-.brief-form input:focus, .brief-form select:focus, .brief-form textarea:focus {
-  border-bottom-color: var(--green);
-}
-.brief-form textarea { font-family: var(--sans); font-size: 14px; line-height: 1.55; resize: vertical; }
-.bf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-.bf-submit { align-self: flex-start; margin-top: 8px; }
-
-.brief-success { max-width: 720px; }
-.brief-success h2 em { font-style: italic; color: var(--green); }
-.brief-success p { margin: 24px 0; font-size: 16px; color: var(--ink-soft); }
-
-@media (max-width: 820px) {
-  .brief-grid { grid-template-columns: 1fr; gap: 40px; }
-  .bf-row { grid-template-columns: 1fr; }
-  .brief-form { padding: 28px 20px; }
+@media (max-width: 540px) {
+  .taller-price { padding: 32px 24px 28px; }
+  .tr-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
 }
 `;
 
@@ -1803,7 +1925,7 @@ function Nav() {
         <a href="#proceso">Proceso</a>
         <a href="#contacto">Contacto</a>
       </div>
-      <a href="#brief" className="nav-cta">Solicitar brief</a>
+      <a href="#brief" className="nav-cta">Agendar sesión</a>
     </nav>
   );
 }
@@ -1849,7 +1971,7 @@ function App() {
         <LineaTiempo />
         {/* <Configurador /> -- ocultado temporalmente */}
         <Proceso />
-        <Brief />
+        <Taller />
       </main>
       <Footer />
 
